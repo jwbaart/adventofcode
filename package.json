@@ -1,0 +1,12 @@
+{
+  "name": "adventofcode",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/jwbaart/adventofcode.git",
+  "author": "jwbaart@gmail.com",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "typescript": "^3.1.4"
+  }
+}
