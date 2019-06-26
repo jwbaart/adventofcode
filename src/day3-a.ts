@@ -1,37 +1,88 @@
-const growGrid = currentGrid => ({
-  previousLastNumber: currentGrid.lastNumber,
-  innerLength: currentGrid.innerLength + 1,
-  gridLength: currentGrid.gridLength + 2,
-  lastNumber: (currentGrid.gridLength + 2) * (currentGrid.gridLength + 2),
-  currentIndex: currentGrid.lastNumber,
-  rowLength: currentGrid.gridLength + 1
-});
+class Grid {
+  private _gridLength;
+  private _lastNumber;
+  private _innerLength;
+  private _rowLength;
+  private _previousLastNumber;
+  private _currentIndex;
+
+  constructor() {
+    this._gridLength = 1;
+    this._lastNumber = 1;
+    this._innerLength = 0;
+    this._rowLength = 1;
+    this._previousLastNumber = 1;
+    this._currentIndex = 1;
+  }
+
+  get gridLength() {
+    return this._gridLength;
+  }
+
+  get lastNumber() {
+    return this._lastNumber;
+  }
+
+  get innerLength() {
+    return this._innerLength;
+  }
+
+  get rowLength() {
+    return this._rowLength;
+  }
+
+  get previousLastNumber() {
+    return this._previousLastNumber;
+  }
+
+  get currentIndex() {
+    return this._currentIndex;
+  }
+
+  get middleRowIndex() {
+    return this._currentIndex - this._rowLength / 2
+  }
+
+  public growGrid() {
+    this._previousLastNumber = this._lastNumber;
+    this._innerLength++;
+
+    this._gridLength = this._gridLength + 2;
+    this._lastNumber = this._gridLength * this._gridLength;
+    this._currentIndex = this._previousLastNumber;
+    this._rowLength = this._gridLength - 1;
+  }
+
+  public moveToNextGridSide() {
+    this._currentIndex = this._currentIndex + this._rowLength;
+  }
+  public isInputContained(input) {
+    return this._lastNumber < input;
+  }
+
+  public isInputContainedInSide(input) {
+    return this._currentIndex < input;
+  }
+}
+
+const getNumberOfSideSteps = (input, middleRowIndex) =>
+  Math.abs(input - middleRowIndex);
 
 const main = () => {
   const puzzleInput: number = 265149;
-  // const puzzleInput: number = 40;
+  // const puzzleInput: number = 6;
 
-  let grid = {
-    gridLength: 1,
-    lastNumber: 1,
-    innerLength: 0,
-    rowLength: 1,
-    previousLastNumber: 1,
-    currentIndex: 1
-  };
+  let grid = new Grid();
 
-  // Build grid large enough to at least contain puzzle input
-  while (grid.lastNumber < puzzleInput) {
-    grid = growGrid(grid);
+  while (grid.isInputContained(puzzleInput)) {
+    grid.growGrid();
   }
 
-  // Find side of puzzle input(right, top, left or bottom)
-  while (grid.currentIndex < puzzleInput) {
-    grid.currentIndex = grid.currentIndex + grid.rowLength;
+  while (grid.isInputContainedInSide(puzzleInput)) {
+    grid.moveToNextGridSide();
   }
-  
-  const middleRowIndex = grid.currentIndex - grid.rowLength / 2;
-  const sideSteps = Math.abs(puzzleInput - middleRowIndex);
+
+  const sideSteps = getNumberOfSideSteps(puzzleInput, grid.middleRowIndex);
 
   console.log("totalSteps", sideSteps + grid.innerLength);
 };
