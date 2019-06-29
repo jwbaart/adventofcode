@@ -9,7 +9,8 @@
   "dependencies": {},
   "scripts": {
     "start": "ts-node",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.3.3",
