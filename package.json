@@ -6,11 +6,17 @@
   "author": "jwbaart@gmail.com",
   "license": "MIT",
   "private": true,
-  "dependencies": {
+  "dependencies": {},
+  "scripts": {
+    "start": "ts-node",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/jest": "^24.0.15",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
     "ts-node": "^7.0.1",
     "typescript": "^3.1.4"
-  },
-  "scripts": {
-    "start": "ts-node"
   }
 }
